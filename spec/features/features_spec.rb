@@ -1,15 +1,15 @@
+require_relative '../setup_test_database'
+
 Capybara.app = BookmarkManager
 
-feature 'Testing route directory' do
-  scenario 'returns hello world' do
-    visit '/'
-    expect(page).to have_content('hello world')
-  end
-end
+feature 'Viewing bookmarks' do
+  scenario 'user can see bookmarks' do
+    insert_test_urls_into_database
 
-feature 'Testing Bookmarks route' do
-  scenario 'returns an array of bookmarks' do
-    visit '/bookmarks'
-    expect(page).to have_content('www.google.com')
+    visit('/bookmarks')
+
+    expect(page).to have_content "http://www.makersacademy.com"
+    expect(page).to have_content "http://www.destroyallsoftware.com"
+    expect(page).to have_content "http://www.google.com"
   end
 end
