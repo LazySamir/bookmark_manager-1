@@ -31,5 +31,9 @@
 ```
 As an avid web user
 So I can access my favourite URLs quickly
-I'd like to be able to add my favourite URLs to a bookmark manager
+I'd like to be able to view my list of favourite URLs
+
+As an avid web user
+So I can increase my list of favourite URLs
+I'd like to be able to add my favourite URLs to my bookmark
 ```
