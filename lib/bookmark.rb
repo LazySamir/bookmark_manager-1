@@ -1,4 +1,5 @@
 require 'pg'
+require 'uri'
 
 class Bookmark
 
@@ -22,6 +23,9 @@ class Bookmark
     @connection = PG.connect(dbname: db)
   end
 
-
+  def self.valid_url?(url)
+    return true if url =~ /\A#{URI::regexp}\z/
+    return false
+  end
 
 end

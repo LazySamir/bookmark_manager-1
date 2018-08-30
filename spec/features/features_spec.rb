@@ -19,4 +19,11 @@ feature 'Adding bookmarks' do
     click_button('Submit')
     expect(page).to have_content "http://www.yahoo.com"
   end
+
+  scenario 'returns a flash message if URL is invalid' do
+    visit('/bookmarks/new')
+    fill_in('bookmark_url', :with => "david&samir are awesome")
+    click_button('Submit')
+    expect(page).to have_content("Invalid URL")
+  end
 end
