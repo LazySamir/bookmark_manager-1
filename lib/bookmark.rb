@@ -3,10 +3,13 @@ require 'uri'
 
 class Bookmark
 
+  attr_reader :id, :url, :name
+
   def self.all
     self.create_connection_to_database
     result = @connection.exec("SELECT * FROM bookmarks;")
-    result.map { |bookmark| bookmark['name'] }
+
+    result.map { |bookmark| Bookmark.new(bookmark['id'], bookmark['url'], bookmark['name']) }
   end
 
   def self.create(url, name)
@@ -26,6 +29,12 @@ class Bookmark
       db = 'bookmark_manager'
     end
     @connection = PG.connect(dbname: db)
+  end
+
+  def initialize(id, url, name)
+    @id = id
+    @url = url
+    @name = name
   end
 
 private
