@@ -5,10 +5,15 @@ class Bookmark
 
   attr_reader :id, :url, :name
 
+  def initialize(id, url, name)
+    @id = id
+    @url = url
+    @name = name
+  end
+
   def self.all
     self.create_connection_to_database
     result = @connection.exec("SELECT * FROM bookmarks;")
-
     result.map { |bookmark| Bookmark.new(bookmark['id'], bookmark['url'], bookmark['name']) }
   end
 
@@ -29,12 +34,6 @@ class Bookmark
       db = 'bookmark_manager'
     end
     @connection = PG.connect(dbname: db)
-  end
-
-  def initialize(id, url, name)
-    @id = id
-    @url = url
-    @name = name
   end
 
 private
