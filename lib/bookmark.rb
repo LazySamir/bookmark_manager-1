@@ -10,8 +10,13 @@ class Bookmark
   end
 
   def self.create(url)
-    self.create_connection_to_database
-    @connection.exec("INSERT INTO bookmarks(url) VALUES ('#{url}');")
+    if self.valid_url?(url)
+      self.create_connection_to_database
+      @connection.exec("INSERT INTO bookmarks(url) VALUES ('#{url}');")
+      true
+    else
+      false
+    end
   end
 
   def self.create_connection_to_database
@@ -22,6 +27,8 @@ class Bookmark
     end
     @connection = PG.connect(dbname: db)
   end
+
+private
 
   def self.valid_url?(url)
     return true if url =~ /\A#{URI::regexp}\z/

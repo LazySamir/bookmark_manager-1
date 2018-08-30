@@ -9,18 +9,18 @@ describe '.all' do
 end
 
 describe '.create' do
-  it 'adds a URL to the list of bookmarks' do
-    Bookmark.create('http://www.yahoo.com')
-    expect(Bookmark.all).to include "http://www.yahoo.com"
+  describe 'when url is valid' do
+    it 'adds a URL to the list of bookmarks' do
+      Bookmark.create('http://www.yahoo.com')
+      expect(Bookmark.all).to include "http://www.yahoo.com"
+    end
+    it 'returns true' do
+      expect(Bookmark.create("http://www.google.com")).to eq true
+    end
   end
-end
-
-describe '.valid_url?' do
-  it 'returns false if URL is invalid' do
-    expect(Bookmark.valid_url?("hi there")).to eq false
-  end
-
-  it 'returns true if URL is valid' do
-    expect(Bookmark.valid_url?("http://www.google.com")).to eq true
+  describe 'when url is invalid?' do
+    it 'returns false' do
+      expect(Bookmark.create("hi there")).to eq false
+    end
   end
 end
