@@ -6,13 +6,13 @@ class Bookmark
   def self.all
     self.create_connection_to_database
     result = @connection.exec("SELECT * FROM bookmarks;")
-    result.map { |bookmark| bookmark['url'] }
+    result.map { |bookmark| bookmark['name'] }
   end
 
-  def self.create(url)
+  def self.create(url, name)
     if self.valid_url?(url)
       self.create_connection_to_database
-      @connection.exec("INSERT INTO bookmarks(url) VALUES ('#{url}');")
+      @connection.exec("INSERT INTO bookmarks(url, name) VALUES ('#{url}', '#{name}');")
       true
     else
       false
