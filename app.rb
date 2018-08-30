@@ -21,8 +21,6 @@ class BookmarkManager < Sinatra::Base
   end
 
   post '/bookmarks' do
-    # if Bookmark.valid_url?(params[:bookmark_url])
-    #   Bookmark.create(params[:bookmark_url])
     flash[:invalid_url] = "Invalid URL" unless Bookmark.create(params[:bookmark_url])
     redirect '/bookmarks'
   end
