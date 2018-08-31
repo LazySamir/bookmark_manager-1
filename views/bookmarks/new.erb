@@ -1,15 +1,17 @@
 <p> Fill in form below to add new bookmark: </p>
 <form action="/bookmarks" method="post">
+  <label for="bookmark_url" > Please enter a valid url </label>
     <input type="text" name="bookmark_url">
+  <label for="bookmark_name" > Please enter a valid name </label>
     <input type="text" name="bookmark_name">
     <input type="submit" value="Submit">
 </form>
 
 <!-- Add code to access flash key here -->
-<!--
+
 <% flash.keys.each do |type| %>
   <div data-alert class="flash <%= type %> alert-box radius">
     <%= flash[type] %>
     <a href="#" class="close">&times;</a>
   </div>
-<% end %> -->
+<% end %>

@@ -1,5 +1,8 @@
 <h1>Bookmarks Index</h1>
 <%= flash[:invalid_url] %>
+<br>
+<a href="/bookmarks/new"> Add new bookmark </a>
+
 <ul>
     <% @bookmarks.each do |bookmark| %>
       <li><a href="<%= bookmark.url%>"> <%= bookmark.name %> </a></li>
