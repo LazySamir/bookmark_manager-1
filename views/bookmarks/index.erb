@@ -4,7 +4,24 @@
 <a href="/bookmarks/new"> Add new bookmark </a>
 
 <ul>
-    <% @bookmarks.each do |bookmark| %>
-      <li><a href="<%= bookmark.url%>"> <%= bookmark.name %> </a></li>
-    <% end %>
+  <% @bookmarks.each do |bookmark| %>
+    <li class="bookmark"><a href="<%= bookmark.url %>"> <%= bookmark.name %> </a>
+      <form action="/bookmarks/<%=bookmark.id%>/delete" method="post">
+        <input type="hidden" name="_method" value='delete'>
+        <input type="submit" value='Delete'>
+      </form>
+      <form action="/bookmarks/<%=bookmark.id%>/edit" method="post">
+        <input type="hidden" name="_method" value='patch'>
+        <input type="submit" value='Edit'>
+      </form>
+    </li>
+  <% end %>
 </ul>
+    <!-- <form action="/bookmarks" method="get">
+
+    </form>
+
+
+    <form action="/bookmarks/update" method="put">
+
+    </form> -->

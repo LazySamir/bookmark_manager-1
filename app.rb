@@ -3,8 +3,8 @@ require 'sinatra/flash'
 require './lib/bookmark.rb'
 
 class BookmarkManager < Sinatra::Base
-
-  enable :sessions
+# method_overide allows me to use delete and patch paths
+  enable :sessions, :method_override
   register Sinatra::Flash
 
   get '/' do
@@ -18,6 +18,12 @@ class BookmarkManager < Sinatra::Base
 
   get '/bookmarks/new' do
     erb(:'bookmarks/new')
+  end
+
+  delete '/bookmarks/:id/delete' do
+    id = params[:id]
+    Bookmark.delete(id)
+    redirect('/bookmarks')
   end
 
   post '/bookmarks' do

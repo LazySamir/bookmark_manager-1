@@ -28,3 +28,31 @@ feature 'Adding bookmarks' do
     expect(page).to have_content("Invalid URL")
   end
 end
+
+feature 'Deleting bookmarks' do
+  scenario 'user can delete a bookmark' do
+    Bookmark.create("https://www.reddit.com", 'reddit')
+    Bookmark.create("https://www.instagram.com", 'instagram')
+
+    visit 'bookmarks'
+    first('.bookmark').click_button 'Delete'
+
+    expect(page).not_to have_content 'reddit'
+    expect(page).to have_content 'instagram'
+  end
+end
+
+feature 'Updating bookmarks' do
+  scenario 'user can update a bookmark' do
+    Bookmark.create("https://www.reddit.com", 'reddit')
+
+    visit 'bookmarks'
+    first('.bookmark').click_button 'Edit'
+    fill_in('url', :with => 'http://www.feddit.com')
+    fill_in('name', :with => 'Feddit')
+    click_button 'submit'
+
+    expect(page).to have_content 'feddit'
+    expect(page).not_to have_content 'reddit'
+  end
+end

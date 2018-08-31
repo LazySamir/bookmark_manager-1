@@ -23,7 +23,13 @@ class Bookmark
     return false unless valid_url?(url)
     create_connection_to_database
     result = @connection.exec("INSERT INTO bookmarks(url, name) VALUES ('#{url}', '#{name}') RETURNING id, url, name;")
+    # the above means you don't need to supply an id when creating a new bookmark
     Bookmark.new(result[0]['id'], result[0]['url'], result[0]['name'])
+  end
+
+  def self.delete(target_id)
+    create_connection_to_database
+    @connection.exec("DELETE FROM bookmarks WHERE id = '#{target_id}'")
   end
 
   private
@@ -31,6 +37,7 @@ class Bookmark
   def self.create_connection_to_database
     ENV['RACK_ENV'] == 'test' ? (db = 'bookmark_manager_test') : (db = 'bookmark_manager')
     @connection = PG.connect(dbname: db)
+    # change so doesnt save an instance variables
   end
 
   def self.valid_url?(url)
