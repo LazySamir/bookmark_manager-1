@@ -12,20 +12,20 @@ class Bookmark
   end
 
   def self.all
-    self.create_connection_to_database
+    create_connection_to_database
     result = @connection.exec("SELECT * FROM bookmarks;")
-    result.map { |bookmark| Bookmark.new(bookmark['id'], bookmark['url'], bookmark['name']) }
+    result.map do |bookmark|
+      Bookmark.new(bookmark['id'], bookmark['url'], bookmark['name'])
+    end
   end
 
   def self.create(url, name)
-    if self.valid_url?(url)
-      self.create_connection_to_database
-      @connection.exec("INSERT INTO bookmarks(url, name) VALUES ('#{url}', '#{name}');")
-      true
-    else
-      false
-    end
+    return false unless valid_url?(url)
+    create_connection_to_database
+    @connection.exec("INSERT INTO bookmarks(url, name) VALUES ('#{url}', '#{name}');")
   end
+
+  private
 
   def self.create_connection_to_database
     if ENV['RACK_ENV'] == 'test'
@@ -36,11 +36,8 @@ class Bookmark
     @connection = PG.connect(dbname: db)
   end
 
-private
-
   def self.valid_url?(url)
-    return true if url =~ /\A#{URI::regexp}\z/
-    return false
+    url =~ /\A#{URI::regexp}\z/
   end
 
 end

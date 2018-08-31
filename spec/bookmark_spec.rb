@@ -16,11 +16,11 @@ describe '.create' do
       bookmarks = Bookmark.all
       expect(bookmarks.first.name).to eq "yahoo"
     end
-    it 'returns true' do
+    it 'returns valid Bookmark object' do
       expect(Bookmark.create("http://www.google.com", "google")).to eq true
     end
   end
-  describe 'when url is invalid?' do
+  describe 'when url is invalid' do
     it 'returns false' do
       expect(Bookmark.create("hi there", "hi")).to eq false
     end
