@@ -32,6 +32,11 @@ class Bookmark
     @connection.exec("DELETE FROM bookmarks WHERE id = '#{target_id}'")
   end
 
+  def self.search_by_id(id)
+    create_connection_to_database
+
+  end
+
   private
 
   def self.create_connection_to_database
