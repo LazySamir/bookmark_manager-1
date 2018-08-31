@@ -22,17 +22,14 @@ class Bookmark
   def self.create(url, name)
     return false unless valid_url?(url)
     create_connection_to_database
-    @connection.exec("INSERT INTO bookmarks(url, name) VALUES ('#{url}', '#{name}');")
+    result = @connection.exec("INSERT INTO bookmarks(url, name) VALUES ('#{url}', '#{name}') RETURNING id, url, name;")
+    Bookmark.new(result[0]['id'], result[0]['url'], result[0]['name'])
   end
 
   private
 
   def self.create_connection_to_database
-    if ENV['RACK_ENV'] == 'test'
-      db = 'bookmark_manager_test'
-    else
-      db = 'bookmark_manager'
-    end
+    ENV['RACK_ENV'] == 'test' ? (db = 'bookmark_manager_test') : (db = 'bookmark_manager')
     @connection = PG.connect(dbname: db)
   end
 
